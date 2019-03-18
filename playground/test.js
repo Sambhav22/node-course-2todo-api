@@ -7,18 +7,19 @@ MongoClient.connect("mongodb://localhost:27017/test1", (err, db) => {
 
   console.log("connected");
 
-  db.collection("users").insertOne(
-    {
-      name: "sambhav"
-    },
-    (err, result) => {
-      if (err) {
-        return console.log("unale to insert user", err);
-      }
-      console.log(result.ops);
-    }
-  );
-  db.collection("users").deleteMany({
-    name: "sambhav"
-  });
+  db.collection("users")
+    .findOneAndUpdate(
+      {
+        name: "sambhav"
+      },
+      {
+        $set: {
+          name: "aman"
+        }
+      },
+      { returnOrignal: false }
+    )
+    .then(result => {
+      console.log(result);
+    });
 });
